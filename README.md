@@ -11,6 +11,16 @@ HttpClient in general.
 This gem was created for my own limited interactions with GeoServer and the `geoserver_migrations` gem.
 
 
+This is, for now, a very naive approach to writing an API client, but it allowed me to discover how the Geoserver API
+worked and gets the job done for me (controlling layer/style management).
+
+
+## Todo
+
+* add tests :)
+* add more API entries?
+* 
+
 
 ## Copyright
 
