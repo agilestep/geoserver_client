@@ -16,10 +16,10 @@ Juwelier::Tasks.new do |gem|
   gem.name = "geoserver_client"
   gem.homepage = "http://github.com/nathanvda/geoserver_client"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Simple GeoServer API client}
+  gem.description = %Q{Simple procedural client to consume the GeoServer REST API}
   gem.email = "'nathan@dixis.com'"
-  gem.authors = ["'nathanvda'"]
+  gem.authors = ["Nathan Van der Auwera"]
 
   # dependencies defined in Gemfile
 end
