@@ -35,7 +35,7 @@ class GeoserverClient
   end
 
   def self.api_root= (api_root)
-    api_root += "/" unless api_root[-1] == "/"
+    api_root += "/" if !api_root.nil? && api_root[-1] != "/"
     @@api_root = api_root
   end
 

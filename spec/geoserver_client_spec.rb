@@ -19,4 +19,17 @@ describe GeoserverClient  do
     end
   end
 
+  [[:api_root, "", "http://localhost:8080/"], [:api_password, "geoserver", "other_password"], [:api_user, "admin", "other_user"]].each do |method|
+    describe "#{method[0]}" do
+      it "returns <#{method[1]}> by default" do
+        GeoserverClient.send("#{method[0]}=", nil)
+        expect(GeoserverClient.send(method[0])).to eq(method[1])
+      end
+      it "returns what is set before" do
+        GeoserverClient.send("#{method[0]}=", method[2])
+        expect(GeoserverClient.send(method[0])).to eq(method[2])
+      end
+    end
+  end
+
 end
