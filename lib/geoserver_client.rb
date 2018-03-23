@@ -164,7 +164,7 @@ class GeoserverClient
     data = {layer: {defaultStyle: style_name }}
 
     update_layer_uri = URI.join(GeoserverClient.api_root, "layers/#{self.workspace}:#{layer_name}.json" )
-    post_data update_layer_uri, data, debug_mode, method: :put
+    post_data update_layer_uri, data.to_json, debug_mode, method: :put
   end
 
   def self.styles(debug_mode=false)
