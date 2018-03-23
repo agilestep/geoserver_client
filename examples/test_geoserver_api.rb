@@ -1,4 +1,6 @@
 # configure geoserver-client
+require "base64"
+require_relative '../lib/geoserver_client'
 
 GeoserverClient.api_root     = "http://localhost:8080/geoserver/rest/"
 GeoserverClient.api_user     = "admin"
@@ -104,10 +106,11 @@ SLD
 
 # Lets assume we have a table called welds in the datastore and create a layer for it
 
-# puts GeoserverClient.delete_style("test_welds", true )
-# puts GeoserverClient.delete_featuretype("test_welds", true )
+puts GeoserverClient.delete_style("test_welds", true )
+puts GeoserverClient.delete_featuretype("test_welds", true )
 
 puts GeoserverClient.create_style("test_welds", {sld: welds_sld}, true )
 puts GeoserverClient.create_featuretype("test_welds", {style_name: "test_welds", native_name: "welds"}, true)
+# puts GeoserverClient.set_layer_style("test_welds", {style_name: "test_welds", native_name: "welds"}, true)
 
-
+# puts GeoserverClient.delete_style("heli_trees")
