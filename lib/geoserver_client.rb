@@ -203,6 +203,22 @@ class GeoserverClient
     response
   end
 
+  def self.update_style(name, options={}, debug_mode=false)
+    filename = options[:filename] || "#{name}.sld"
+
+    # raise exception if filename does not end in sld?
+
+    if options[:sld].present?
+      post_sld_uri = URI.join(GeoserverClient.api_root, "styles/#{filename}" )
+      response = post_data(post_sld_uri, options[:sld], debug_mode, method: :put, content_type: 'application/vnd.ogc.sld+xml')
+    else
+      raise StandardError.new("SLD parameter was missing!")
+    end
+
+    response
+  end
+
+
 
   def self.delete_style(name, debug_mode = false)
     delete_style_uri = URI.join(GeoserverClient.api_root, "styles/#{name}.json" )
@@ -253,8 +269,12 @@ class GeoserverClient
 
     log "Response status = #{response.status}" if debug_mode
 
-    raise StandardError.new(response.body) unless response.status == 200 || response.status == 201
 
+    unless response.status == 200 || response.status == 201
+      log "Unexpected result: status = #{response.status}, body = #{response.body}"
+      log "DEBUGGER = #{@debugger.join.to_s}"
+      raise StandardError.new(response.body)
+    end
     log response.inspect if debug_mode
 
     response
