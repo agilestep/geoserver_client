@@ -271,9 +271,13 @@ class GeoserverClient
 
 
     unless response.status == 200 || response.status == 201
-      log "Unexpected result: status = #{response.status}, body = #{response.body}"
-      log "DEBUGGER = #{@debugger.join.to_s}"
-      raise StandardError.new(response.body)
+      if http_method == :delete && response.status == 404
+        log "Warning: did not exist or was already deleted. Error = #{response.body}"
+      else
+        log "Unexpected result: status = #{response.status}, body = #{response.body}"
+        log "DEBUGGER = #{@debugger.join.to_s}"
+        raise StandardError.new(response.body)
+      end
     end
     log response.inspect if debug_mode
 
