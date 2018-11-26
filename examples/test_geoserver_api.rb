@@ -114,3 +114,8 @@ puts GeoserverClient.create_featuretype("test_welds", {style_name: "test_welds",
 # puts GeoserverClient.set_layer_style("test_welds", {style_name: "test_welds", native_name: "welds"}, true)
 
 # puts GeoserverClient.delete_style("heli_trees")
+
+
+file_name = File.join(File.expand_path(File.dirname(__FILE__)), "rapl_zakbaken_s.png")
+puts GeoserverClient.create_resource(file_name)
+# puts GeoserverClient.delete_resource(file_name)

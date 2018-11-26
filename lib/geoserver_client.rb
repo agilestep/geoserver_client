@@ -226,6 +226,37 @@ class GeoserverClient
   end
 
 
+  def self.create_resource(file_name, options={}, debug_mode=false)
+    # check if the file exists?
+    raise StandardError.new("Given file #{file_name} does not exist?") unless File.exist?(file_name)
+
+    basename  = File.basename(file_name)
+    file_data = File.read(file_name)
+
+
+    create_resource_uri = URI.join(GeoserverClient.api_root, "resource/", basename, "?operation=default" )
+
+    puts "Create resource uri = #{create_resource_uri}"
+
+    response = post_data(create_resource_uri, file_data, debug_mode, method: :put, content_type: '*/*')
+    response
+  end
+
+  def self.delete_resource(file_name, options={}, debug_mode=false)
+
+    basename  = File.basename(file_name)
+
+    # deleting will delete folder recursively, but how can we check/protect this?
+
+    delete_resource_uri = URI.join(GeoserverClient.api_root, "resource/", basename )
+
+    puts "Delete resource uri = #{delete_resource_uri}"
+
+    response = post_data(delete_resource_uri, {}, debug_mode, method: :delete)
+    response
+  end
+
+
   protected
 
   def self.get_data(uri, data, debug_mode)
