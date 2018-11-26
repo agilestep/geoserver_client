@@ -234,7 +234,7 @@ class GeoserverClient
     file_data = File.read(file_name)
 
 
-    create_resource_uri = URI.join(GeoserverClient.api_root, "resource/", basename, "?operation=default" )
+    create_resource_uri = URI.join(GeoserverClient.api_root, "resource/styles/", basename, "?operation=default" )
 
     puts "Create resource uri = #{create_resource_uri}"
 
