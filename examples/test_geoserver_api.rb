@@ -1,5 +1,6 @@
 # configure geoserver-client
 require "base64"
+require "json"
 require_relative '../lib/geoserver_client'
 
 GeoserverClient.api_root     = "http://localhost:8080/geoserver/rest/"
@@ -10,6 +11,20 @@ GeoserverClient.workspace    = 'YOUR_WORKSPACE'
 GeoserverClient.datastore    = 'YOUR_DATASTORE'
 
 GeoserverClient.logger = :stdout
+
+
+# puts GeoserverClient.delete_layergroup("masterdata_2", true)
+# puts GeoserverClient.create_layergroup("masterdata_2", ["sabic:pipelines", "sabic:cables"], {}, true)
+#
+# puts GeoserverClient.layergroups(true)
+#
+# puts GeoserverClient.get_layergroup("masterdata", true )
+#
+# puts GeoserverClient.layergroups(true)
+#
+# puts GeoserverClient.delete_layergroup("masterdata", true)
+# puts GeoserverClient.delete_layergroup("masterdata_2", true)
+#
 
 
 # create an sld for test

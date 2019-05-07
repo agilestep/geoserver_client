@@ -257,6 +257,55 @@ class GeoserverClient
   end
 
 
+  def self.create_layergroup(layer_group_name, layers, options= {}, debug_mode = false)
+    log "Geoserver::Create layer-group #{layer_group_name} in datastore #{self.datastore}"
+
+    data = { layerGroup: {
+        name: layer_group_name,
+        mode: "SINGLE",
+        workspace: { name: GeoserverClient.workspace },
+        publishables: {published:[]}
+      }
+    }
+
+    layers.each do |layer|
+      layer_data = {"@type" => "layer", "name" => layer}
+      data[:layerGroup][:publishables][:published] << layer_data
+    end
+
+    create_layergroup_uri = URI.join(GeoserverClient.api_root, "layergroups.json" )
+
+    # puts "Create layergroup uri = #{create_layergroup_uri}"
+
+    response = post_data(create_layergroup_uri, data.to_json, debug_mode)
+    response
+  end
+
+  def self.layergroups(debug_mode=false)
+    log "Geoserver::Get layergroups in workspace #{self.workspace}"
+
+    get_layergroups_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups.json" )
+    get_data(get_layergroups_uri, {}, debug_mode )
+  end
+
+
+
+  def self.get_layergroup(layer_group_name, debug_mode = false)
+    log "Geoserver::Get layer-group #{layer_group_name} in datastore #{self.datastore}"
+
+    get_lg_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups/#{layer_group_name}.json" )
+    get_data(get_lg_uri, {}, debug_mode )
+  end
+
+
+  def self.delete_layergroup(layer_group_name, debug_mode = false)
+    log "Geoserver::DELETE layer-group #{layer_group_name} in workspace #{self.workspace}"
+
+    get_lg_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups/#{layer_group_name}.json" )
+    post_data(get_lg_uri, {}, debug_mode, method: :delete )
+  end
+
+
   protected
 
   def self.get_data(uri, data, debug_mode)
