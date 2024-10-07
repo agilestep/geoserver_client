@@ -87,7 +87,7 @@ class GeoserverClient
 
     puts "workspace = #{self.workspace}"
 
-    get_feature_types_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/featuretypes.json" )
+    get_feature_types_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/featuretypes" )
     get_data(get_feature_types_uri, {}, debug_mode )
   end
 
@@ -95,21 +95,21 @@ class GeoserverClient
   def self.layers(debug_mode=false)
     log "Get layers in datastore #{self.datastore}"
 
-    get_feature_types_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes.json" )
+    get_feature_types_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes" )
     get_data(get_feature_types_uri, {}, debug_mode )
   end
 
   def self.feature_type(layer_name, debug_mode=false)
     log "Get layer #{layer_name} in datastore #{self.datastore}"
 
-    get_feature_type_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes/#{layer_name}.json" )
+    get_feature_type_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes/#{layer_name}" )
     get_data(get_feature_type_uri, {}, debug_mode )
   end
 
   def self.layer(layer_name, debug_mode=false)
     log "Get layer #{layer_name} in datastore #{self.datastore}"
 
-    get_feature_type_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/layers/#{layer_name}.json" )
+    get_feature_type_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/layers/#{layer_name}" )
     get_data(get_feature_type_uri, {}, debug_mode )
   end
 
@@ -132,13 +132,13 @@ class GeoserverClient
 
 
 
-    create_featuretype_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes.json" )
+    create_featuretype_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes" )
     post_data create_featuretype_uri, data.to_json, debug_mode
   end
 
 
   def self.delete_featuretype(name, debug_mode=false)
-    delete_featuretype_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes/#{name}.json?recurse=true" )
+    delete_featuretype_uri = URI.join(GeoserverClient.api_root, "workspaces/#{self.workspace}/datastores/#{self.datastore}/featuretypes/#{name}?recurse=true" )
     response = post_data(delete_featuretype_uri, {}, debug_mode, method: :delete )
   end
 
@@ -163,14 +163,14 @@ class GeoserverClient
   def self.set_layer_style(layer_name, style_name, debug_mode=false)
     data = {layer: {defaultStyle: style_name }}
 
-    update_layer_uri = URI.join(GeoserverClient.api_root, "layers/#{self.workspace}:#{layer_name}.json" )
+    update_layer_uri = URI.join(GeoserverClient.api_root, "layers/#{self.workspace}:#{layer_name}" )
     post_data update_layer_uri, data.to_json, debug_mode, method: :put
   end
 
   def self.styles(debug_mode=false)
     log "Geoserver::Get styles in datastore #{self.datastore}"
 
-    get_styles_uri = URI.join(GeoserverClient.api_root, "styles.json" )
+    get_styles_uri = URI.join(GeoserverClient.api_root, "styles" )
     get_data(get_styles_uri, {}, debug_mode )
   end
 
@@ -192,7 +192,7 @@ class GeoserverClient
         filename: filename
       }
     }
-    create_style_uri = URI.join(GeoserverClient.api_root, "styles.json" )
+    create_style_uri = URI.join(GeoserverClient.api_root, "styles" )
     response = post_data(create_style_uri, data.to_json, debug_mode)
 
     if options[:sld].present?
@@ -221,7 +221,7 @@ class GeoserverClient
 
 
   def self.delete_style(name, debug_mode = false)
-    delete_style_uri = URI.join(GeoserverClient.api_root, "styles/#{name}.json" )
+    delete_style_uri = URI.join(GeoserverClient.api_root, "styles/#{name}" )
     response = post_data(delete_style_uri, {}, debug_mode, method: :delete )
   end
 
@@ -273,7 +273,7 @@ class GeoserverClient
       data[:layerGroup][:publishables][:published] << layer_data
     end
 
-    create_layergroup_uri = URI.join(GeoserverClient.api_root, "layergroups.json" )
+    create_layergroup_uri = URI.join(GeoserverClient.api_root, "layergroups" )
 
     # puts "Create layergroup uri = #{create_layergroup_uri}"
 
@@ -284,7 +284,7 @@ class GeoserverClient
   def self.layergroups(debug_mode=false)
     log "Geoserver::Get layergroups in workspace #{self.workspace}"
 
-    get_layergroups_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups.json" )
+    get_layergroups_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups" )
     get_data(get_layergroups_uri, {}, debug_mode )
   end
 
@@ -293,7 +293,7 @@ class GeoserverClient
   def self.get_layergroup(layer_group_name, debug_mode = false)
     log "Geoserver::Get layer-group #{layer_group_name} in datastore #{self.datastore}"
 
-    get_lg_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups/#{layer_group_name}.json" )
+    get_lg_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups/#{layer_group_name}" )
     get_data(get_lg_uri, {}, debug_mode )
   end
 
@@ -301,7 +301,7 @@ class GeoserverClient
   def self.delete_layergroup(layer_group_name, debug_mode = false)
     log "Geoserver::DELETE layer-group #{layer_group_name} in workspace #{self.workspace}"
 
-    get_lg_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups/#{layer_group_name}.json" )
+    get_lg_uri = URI.join(GeoserverClient.api_root, "workspaces/#{GeoserverClient.workspace}/layergroups/#{layer_group_name}" )
     post_data(get_lg_uri, {}, debug_mode, method: :delete )
   end
 
@@ -343,7 +343,7 @@ class GeoserverClient
     # accept       = options[:accept] || 'application/json'
     accept = content_type
 
-    response = self.http_client.send(http_method, uri, data, {'Authorization' => "Basic #{auth}", 'Content-Type' => content_type, 'Accept' => accept } )
+    response = self.http_client.send(http_method, uri, data, {'Authorization' => "Basic #{auth}", 'Content-Type' => content_type } )
 
     log @debugger.join.to_s if debug_mode
 
@@ -355,7 +355,7 @@ class GeoserverClient
         log "Warning: did not exist or was already deleted. Error = #{response.body}"
       else
         log "Unexpected result: status = #{response.status}, body = #{response.body}"
-        log "DEBUGGER = #{@debugger.join.to_s}"
+        log "DEBUGGER = #{@debugger.join.to_s}" if debug_mode
         raise StandardError.new(response.body)
       end
     end
